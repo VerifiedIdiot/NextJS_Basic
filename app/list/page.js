@@ -1,33 +1,49 @@
+"use client";
 import Image from "next/image";
+import { useState } from "react";
+
+
+// [...xx] dddasdasdddd
 
 
 // map 함수를 사용하여 단순배열을 순회하는 방법
 export default function List() {
+  let 상품 = ["Tomatoes", "Pasta", "Coconut"];
+  const [counts, setCounts] = useState([0, 0, 0]);
 
-  
+  // 상품의 수량을 증가시키는 함수
+  const incrementCount = (index) => {
+    const newCounts = [...counts];
+    newCounts[index]++;
+    setCounts(newCounts);
+  };
 
-  let 상품 = ['Tomatoes', 'Pasta', 'Coconut'];
+  // 상품의 수량을 감소시키는 함수
+  const decrementCount = (index) => {
+    const newCounts = [...counts];
+    if (newCounts[index] > 0) {
+      newCounts[index]--;
+      setCounts(newCounts);
+    }
+  };
+
   return (
-    <div> 
+    <div>
       <h4 className="title">상품목록</h4>
-      { 
-        상품.map((item,index) => {
-          return (
-            <div className="food" key={index}> 
-           
-              <img src={`/food`+index+`.png`} className="food-img"/>  
-           
-              <h4>{item} $40</h4>
-            </div>
-          );
-        })
-      }
+      {상품.map((item, index) => (
+        <div className="food" key={index}>
+          <img src={`/food${index}.png`} alt={item} className="food-img" />
+          <h4>{item} $40</h4>
+          <span>{counts[index]}</span>
+          <button onClick={() => incrementCount(index)}>+</button>
+          <button onClick={() => decrementCount(index)}>-</button>
+        </div>
+      ))}
     </div>
   );
 }
 
-
-// map 함수를 사용하여 객체배열을 순회하는 방법 
+// map 함수를 사용하여 객체배열을 순회하는 방법
 
 // export default function List() {
 //   let 상품 = [
@@ -82,7 +98,7 @@ export default function List() {
 // }
 
 // map 함수를 사용하여 이중객체를 순회하는 방법
-// Object.keys()는 Java의 HashMap타입의 변수의 Key를 반환하는 keySet()과 같음 
+// Object.keys()는 Java의 HashMap타입의 변수의 Key를 반환하는 keySet()과 같음
 // Key : value 를 반환하는 entrySet()과 헷갈리지 말 것 .
 
 // export default function ProductInfo() {
